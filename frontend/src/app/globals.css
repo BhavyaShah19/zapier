@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+:root {
+    --custom-amber-700: #ff4f00;
+}
+
+.bg-custom-amber {
+    background-color: var(--custom-amber-700);
+}
