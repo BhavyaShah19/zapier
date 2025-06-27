@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { JWT_PASSWORD } from "./config";
 
 export function authMiddleware  (req: Request, res: Response, next: NextFunction) {
+
     console.log("auth middleware")
     const token = req.headers.authorization
     if (!token) {
@@ -15,6 +16,7 @@ export function authMiddleware  (req: Request, res: Response, next: NextFunction
         req.id = decodedPayloaded.id
         next();
     } catch (error) {
-         res.status(403).json({ message: "You are not logged in" })
+        
+        res.status(403).json({ message: "You are not logged in" })
     }
 } 
