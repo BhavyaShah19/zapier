@@ -6,11 +6,12 @@ const TOPIC_NAME = "zap-events"
 
 const kafka = new Kafka({
     clientId: 'outbox-processor',
-    brokers: ['localhost:9092']
+    brokers: ['kafka:9092']
 })
 
 
 async function main() {
+    console.log("inside the processor and it is running")
     const producer = kafka.producer()
     await producer.connect()
     while (1) {
@@ -25,7 +26,7 @@ async function main() {
                 pendingRows.map(row => {
                     return {
                         key: row.id,
-                        value: JSON.stringify(row.zapRunId),
+                        value: JSON.stringify({zaprunId: row.zapRunId,stage:0}),
                     }
                 })
         })

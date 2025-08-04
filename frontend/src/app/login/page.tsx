@@ -45,7 +45,6 @@ export default function () {
                                 password,
                             });
                             localStorage.setItem("token",res.data.token)
-                            document.cookie=`token=${res.data.token}`
                             console.log("I am here in login going to dashboard")
                             router.push("/dashboard")
                         }} size="big">Login</PrimaryButton> 

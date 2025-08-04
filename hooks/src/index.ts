@@ -25,6 +25,6 @@ app.post('/hooks/catch/:userId/:zapId', async (req, res) => {
     res.json({message:"Webhook received"});
 });
  
-app.listen(3000, () => {
-    console.log('listening on port 3000');  
+app.listen(3002, () => {
+    console.log('listening on port 3002');  
 })

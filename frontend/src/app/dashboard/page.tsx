@@ -32,7 +32,6 @@ interface Zap {
             image: string
         }
     }
-
 }
 function useZaps() {
     const [zaps, setZaps] = useState<Zap[]>([])
