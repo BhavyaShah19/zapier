@@ -18,22 +18,10 @@
 #           username: ${{ secrets.EC2_USER }}
 #           key: ${{ secrets.EC2_SSH_KEY }}
 #           script: |
-#             # Move to home directory
-#             cd /home/${{ secrets.EC2_USER }}
+#           docker pull dockbh/zapier-worker:${{github.sha}}
+#           docker pull dockbh/zapier-processor:${{github.sha}}
+#           docker pull dockbh/zapier-backend:${{github.sha}}
+#           docker pull dockbh/zapier-frontend:${{github.sha}}  
+#           docker pull dockbh/zapier-hooks:${{github.sha}}
 
-#             # Clone or update the repo
-#             if [ -d "zapier-app" ]; then
-#               cd zapier-app
-#               git pull origin master
-#             else
-#               git clone https://github.com/BhavyaShah19/zapier.git zapier-app
-#               cd zapier-app
-#             fi
-
-#             # Log in to Docker Hub
-#             docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-
-#             # Pull latest images and restart services
-#             docker-compose pull
-#             docker-compose down
-#             docker-compose up -d
+          

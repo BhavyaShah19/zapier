@@ -1,0 +1,17 @@
+FROM node:20-alpine AS base
+
+WORKDIR /app
+
+COPY ./primary-backend/package*.json ./
+
+RUN npm install
+
+COPY ./primary-backend/prisma prisma
+RUN npx prisma generate
+COPY ./primary-backend/src src
+COPY ./primary-backend/tsconfig.json .
+RUN npm run build
+
+EXPOSE 3001
+
+CMD ["sh", "-c", "npm run migrate && node dist/index.js"]

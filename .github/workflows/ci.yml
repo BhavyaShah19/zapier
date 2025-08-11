@@ -25,39 +25,39 @@ jobs:
       - name: Build and push frontend
         uses: docker/build-push-action@v5
         with:
-          context: ./frontend
-          file: ./frontend/Dockerfile
+          context: .
+          file: ./docker/Dockerfile.frontend
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/zapier-frontend:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/zapier-frontend:${{ github.sha }}
 
       - name: Build and push backend
         uses: docker/build-push-action@v5
         with:
-          context: ./primary-backend
-          file: ./primary-backend/Dockerfile
+          context: .
+          file: ./docker/Dockerfile.backend
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/zapier-backend:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/zapier-backend:${{ github.sha }}
 
       - name: Build and push hooks
         uses: docker/build-push-action@v5
         with:
-          context: ./hooks
-          file: ./hooks/Dockerfile
+          context: .
+          file: ./docker/Dockerfile.hooks
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/zapier-hooks:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/zapier-hooks:${{ github.sha }}
 
       - name: Build and push processor
         uses: docker/build-push-action@v5
         with:
-          context: ./processor
-          file: ./processor/Dockerfile
+          context: .
+          file: ./docker/Dockerfile.processor
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/zapier-processor:latest  
+          tags: ${{ secrets.DOCKER_USERNAME }}/zapier-processor:${{ github.sha }}
 
       - name: Build and push worker
         uses: docker/build-push-action@v5
         with:
-          context: ./worker
-          file: ./worker/Dockerfile
+          context: .
+          file: ./docker/Dockerfile.worker
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/zapier-worker:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/zapier-worker:${{ github.sha }}

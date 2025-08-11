@@ -1,0 +1,20 @@
+FROM node:20-alpine AS base
+
+WORKDIR /app  
+
+COPY ./worker/package*.json ./
+
+COPY ./worker/tsconfig.json .
+RUN npm install  
+
+COPY ./worker/prisma prisma
+RUN npx prisma generate
+ 
+COPY ./worker/src src
+
+RUN npm run build
+
+COPY ./worker/wait-for-kafka.sh /usr/local/bin/wait-for-kafka.sh
+RUN chmod +x /usr/local/bin/wait-for-kafka.sh
+
+CMD ["sh", "/usr/local/bin/wait-for-kafka.sh"]
