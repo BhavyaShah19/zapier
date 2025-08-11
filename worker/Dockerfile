@@ -14,6 +14,7 @@ COPY ./src src
 
 RUN npm run build
 
-EXPOSE 3003  
+COPY wait-for-kafka.sh /usr/local/bin/wait-for-kafka.sh
+RUN chmod +x /usr/local/bin/wait-for-kafka.sh
 
-CMD ["node", "dist/index.js"]  
+CMD ["sh", "/usr/local/bin/wait-for-kafka.sh"]

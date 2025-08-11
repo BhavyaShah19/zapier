@@ -6,6 +6,7 @@ const app = express();
 app.use(express.json());
 
 app.post('/hooks/catch/:userId/:zapId', async (req, res) => {
+    console.log("inside the catch hook")
     const { userId, zapId } = req.params;
     const { body } = req.body
 

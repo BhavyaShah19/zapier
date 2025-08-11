@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zapier-workerPod
+  namespace: worker-team
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zapier-worker
+  template:
+    metadata:
+      labels:
+        app: zapier-worker
+    spec:
+      containers:
+        - name: zapier-worker
+          image: dockbh/zapier-worker:latest
+        - name: zapier-processor
+          image: dockbh/zapier-processor:latest
+        - name: zookeeper
+          image: confluentinc/cp-zookeeper:latest
+          ports:
+            - containerPort: 2181
+          env:
+            - name: ZOOKEEPER_CLIENT_PORT
+              value: "2181"
+            - name: ZOOKEEPER_TICK_TIME
+              value: "2000"
+        - name: kafka
+          image: confluentinc/cp-kafka:latest
+          ports:
+            - containerPort: 9092
+          env:
+            - name: KAFKA_BROKER_ID
+              value: "1"
+            - name: KAFKA_ZOOKEEPER_CONNECT
+              value: localhost:2181
+            - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
+              value: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+            - name: KAFKA_ADVERTISED_LISTENERS
+              value: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+            - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+              value: "1"
+          volumeMounts:
+            - name: zapier-worker-secret
+              mountPath: "/app/secrets"
+              readOnly: true
+      volumes:
+        - name: zapier-worker-secret
+          secret:
+            secretName: zapier-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zapier-workerService
+  namespace: worker-team
+spec:
+  selector:
+    app: zapier-worker

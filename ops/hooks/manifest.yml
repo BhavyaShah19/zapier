@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zapier-hooks
+  namespace: hooks-team
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zapier-hooks
+  template:
+    metadata:
+      labels:
+        app: zapier-hooks
+    spec:
+      containers:
+        - name: zapier-hooks
+          image: dockbh/zapier-hooks:latest
+          volumeMounts:
+            - name: zapier-hooks-secret
+              mountPath: "/app/secrets"
+              readOnly: true
+      volumes:
+        - name: zapier-hooks-secret
+          secret:
+            secretName: zapier-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zapier-hooksService
+  namespace: zapier-hooks
+spec:
+  selector:
+    app: zapier-hooks
+  ports:
+    - protocol: TCP
+      port: 3002
+      targetPort: 3002
+  type: ClusterIP

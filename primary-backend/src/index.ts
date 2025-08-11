@@ -15,6 +15,6 @@ app.use("/api/v1/zap",zapRouter)
 app.use("/api/v1/trigger",triggerRouter)
 app.use("/api/v1/action",actionRouter)
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+app.listen(3001, () => {
+  console.log("Server is running on port 3001");
 });

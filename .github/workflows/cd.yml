@@ -1,0 +1,39 @@
+# name: CD
+
+# on:
+#   workflow_run:
+#     workflows: ["CI"]
+#     types:
+#       - success
+
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Deploy to EC2 via SSH
+#         uses: appleboy/ssh-action@v0.1.6
+#         with:
+#           host: ${{ secrets.EC2_HOST }}
+#           username: ${{ secrets.EC2_USER }}
+#           key: ${{ secrets.EC2_SSH_KEY }}
+#           script: |
+#             # Move to home directory
+#             cd /home/${{ secrets.EC2_USER }}
+
+#             # Clone or update the repo
+#             if [ -d "zapier-app" ]; then
+#               cd zapier-app
+#               git pull origin master
+#             else
+#               git clone https://github.com/BhavyaShah19/zapier.git zapier-app
+#               cd zapier-app
+#             fi
+
+#             # Log in to Docker Hub
+#             docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+#             # Pull latest images and restart services
+#             docker-compose pull
+#             docker-compose down
+#             docker-compose up -d

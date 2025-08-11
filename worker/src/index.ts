@@ -20,7 +20,6 @@ async function main() {
     await producer.connect()
 
     await consumer.subscribe({ topic: TOPIC_NAME, fromBeginning: true })
-    console.log("outside the loop1")
     await consumer.run({
 
         autoCommit: false,

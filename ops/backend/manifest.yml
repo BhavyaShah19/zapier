@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zapier-backendPod
+  namespace: backend-team
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zapier-backend
+  template:
+    metadata:
+      labels:
+        app: zapier-backend
+    spec:
+      containers:
+        - name: zapier-backend
+          image: dockbh/zapier-backend:latest
+          ports:
+            - containerPort: 3001
+          volumeMounts:
+            - name: zapier-backend-secrets
+              mountPath: "/app/secrets"
+              readOnly: true
+      volumes:
+        - name: zapier-backend-secrets
+          secret:
+            secretName: zapier-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zapier-backendService
+  namespace: backend-team
+spec:
+  selector:
+    app: zapier-backend
+  ports:
+    - protocol: TCP
+      port: 3001
+      targetPort: 3001
+  type: ClusterIP

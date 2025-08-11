@@ -13,6 +13,6 @@ COPY ./src src
 COPY tsconfig.json .
 RUN npm run build
 
-EXPOSE 3000
+EXPOSE 3001
 
 CMD ["sh", "-c", "npm run migrate && node dist/index.js"]
