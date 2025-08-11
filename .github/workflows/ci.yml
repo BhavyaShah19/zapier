@@ -23,7 +23,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Build and push frontend
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         with:
           context: ./frontend
           file: ./frontend/Dockerfile
@@ -31,7 +31,7 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/zapier-frontend:latest
 
       - name: Build and push backend
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         with:
           context: ./primary-backend
           file: ./primary-backend/Dockerfile
@@ -39,7 +39,7 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/zapier-backend:latest
 
       - name: Build and push hooks
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         with:
           context: ./hooks
           file: ./hooks/Dockerfile
@@ -47,7 +47,7 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/zapier-hooks:latest
 
       - name: Build and push processor
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         with:
           context: ./processor
           file: ./processor/Dockerfile
@@ -55,7 +55,7 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/zapier-processor:latest  
 
       - name: Build and push worker
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         with:
           context: ./worker
           file: ./worker/Dockerfile
