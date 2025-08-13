@@ -43,8 +43,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             docker pull dockbh/zapier-hooks:${{ github.sha }}
-            docker stop zapier-hooks || true
-            docker rm zapier-hooks || true
+            docker stop dockbh/zapier-hooks || true
+            docker rm dockbh/zapier-hooks || true
             docker run -d \
               --name hooks \
               --network app-network \

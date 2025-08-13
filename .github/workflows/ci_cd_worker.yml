@@ -43,8 +43,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             docker pull dockbh/zapier-worker:${{ github.sha }}
-            docker stop zapier-worker || true
-            docker rm zapier-worker || true
+            docker stop dockbh/zapier-worker || true
+            docker rm dockbh/zapier-worker || true
             docker run -d \
               --name zapier-worker \
               --restart always \
