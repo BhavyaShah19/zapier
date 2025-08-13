@@ -43,8 +43,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             docker pull dockbh/zapier-frontend:${{ github.sha }}
-            docker stop dockbh/zapier-frontend || true
-            docker rm dockbh/zapier-frontend || true
+            docker stop fe || true
+            docker rm fe || true
             docker run -d \
               --name fe \
               --network app-network \
