@@ -1,0 +1,55 @@
+name: CI_CD_hooks
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - './hooks/**'
+      - '.github/workflows/ci_cd_hooks.yml'
+    
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Docker login 
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and push hooks
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./docker/Dockerfile.hooks
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/zapier-hooks:latest
+            ${{ secrets.DOCKER_USERNAME }}/zapier-hooks:${{ github.sha }}
+
+      - name: Deploy to VM
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker pull dockbh/zapier-hooks:${{ github.sha }}
+            docker stop zapier-hooks || true
+            docker rm zapier-hooks || true
+            docker run -d \
+              --name hooks \
+              --network app-network \
+              --restart always \
+              -p 3002:3002 \    
+              -e DATABASE_URL=${{ secrets.DATABASE_URL }} \          
+              dockbh/zapier-hooks:${{ github.sha }}
+

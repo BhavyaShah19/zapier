@@ -33,7 +33,7 @@ async function main() {
         await client.zapRunOutbox.deleteMany({
             where:{
                 id:{
-                    in: pendingRows.map(row => row.id)
+                    in: pendingRows.maprow => row.id()
                 }
             }
         })
