@@ -50,9 +50,10 @@ jobs:
               --restart always \
               --network app-network \
               -p 3001:3001 \
-              -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
-              -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
+              -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+              -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
               dockbh/zapier-backend:${{ github.sha }}
+
       
 
 
