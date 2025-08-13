@@ -1,4 +1,4 @@
-name: CI_CD_Worker
+name: CI_CD_worker
 
 on:
   push:
