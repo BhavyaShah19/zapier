@@ -41,16 +41,22 @@ jobs:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          - name: Deploy to VM
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             docker pull dockbh/zapier-hooks:${{ github.sha }}
-            docker stop hooks || true
-            docker rm hooks || true
+            docker stop hooksForZap || true
+            docker rm hooksForZap || true
+            echo "docker run -d --name hooks --network app-network --restart always -p 3002:3002 -e DATABASE_URL=${{ secrets.DATABASE_URL }} dockbh/zapier-hooks:${{ github.sha }}"
             docker run -d \
-              --name hooks \
+              --name hooksForZap \
               --network app-network \
               --restart always \
               -p 3002:3002 \
-              -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
               dockbh/zapier-hooks:${{ github.sha }}
 
 
