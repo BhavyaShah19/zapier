@@ -12,10 +12,10 @@ function useAvailablActionsAndTriggers() {
     const [availableActions, setAvailableActions] = useState<[]>([])
     const [availableTriggers, setAvailableTriggers] = useState<[]>([])
     useEffect(() => {
-        axios.get(`${BACKEND_URL}/api/v1/action/available`).then(res => {
+        axios.get(`/api/v1/action/available`).then(res => {
             setAvailableActions(res.data.availableActions)
         })
-        axios.get(`${BACKEND_URL}/api/v1/trigger/available`).then(res => {
+        axios.get(`/api/v1/trigger/available`).then(res => {
             setAvailableTriggers(res.data.availableTriggers)
         })
     }, [])
@@ -44,7 +44,7 @@ export default function () {
                 if (!selectedTrigger?.id) {
                     return
                 }
-                const response = await axios.post(`${BACKEND_URL}/api/v1/zap`, {
+                const response = await axios.post(`/api/v1/zap`, {
                     availableTriggerId: selectedTrigger.id,
                     triggerMetaData: {},
                     actions: selectedActions.map(a => ({

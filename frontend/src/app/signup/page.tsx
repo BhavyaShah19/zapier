@@ -42,7 +42,7 @@ export default function () {
                     }} label={"Password"} type="password" placeholder="Password"></Input>
                     <div className="pt-4">
                         <PrimaryButton onclick={async() => {
-                            await axios.post(`${BACKEND_URL}/api/v1/user/signup`, {
+                            await axios.post(`/api/v1/user/signup`, {
                                 username: email,
                                 password,
                                 name

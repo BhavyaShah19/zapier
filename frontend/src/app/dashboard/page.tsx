@@ -37,7 +37,7 @@ function useZaps() {
     const [zaps, setZaps] = useState<Zap[]>([])
     const [loading, setLoading] = useState(true)
     useEffect(() => {
-        axios.get(`${BACKEND_URL}/api/v1/zap`, {
+        axios.get(`/api/v1/zap`, {
             headers: {
                 Authorization: `${localStorage.getItem("token")}`
             }
@@ -89,7 +89,7 @@ function ZapTable({ zaps }: { zaps: Zap[] }) {
                 </div>
                 <div className="flex-1">{z.id}</div>
                 <div className="flex-1">Nov 13, 2023</div>
-                <div className="flex-1">{`${HOOKS_URL}/hooks/catch/1/${z.id}`}</div>
+                <div className="flex-1">{`/hooks/catch/1/${z.id}`}</div>
                 <div className="flex-1"><LinkButton onclick={() => {
                     router.push("/zap/" + z.id)
                 }}>Go</LinkButton></div>
