@@ -49,6 +49,6 @@ jobs:
               --name fe \
               --network app-network \
               --restart always \
-              -p 3000:3000 \              
+              -p 3000:3000 \  
               dockbh/zapier-frontend:${{ github.sha }}  
       
