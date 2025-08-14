@@ -4,7 +4,7 @@ on:
   push:
     branches: [master]
     paths:
-      - './frontend/**'
+      - '../../frontend/**'
       - '.github/workflows/ci_cd_frontend.yml'
     
 
