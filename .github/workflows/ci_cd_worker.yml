@@ -43,10 +43,10 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             docker pull dockbh/zapier-worker:${{ github.sha }}
-            docker stop zapier-worker || true
-            docker rm zapier-worker || true
+            docker stop zapierWorker || true
+            docker rm zapierWorker || true
             docker run -d \
-              --name zapier-worker \
+              --name zapierWorker \
               --restart always \
               --network kafka-net \
               -e DATABASE_URL=${{ secrets.DATABASE_URL }} \

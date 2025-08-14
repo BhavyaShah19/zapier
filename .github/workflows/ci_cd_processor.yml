@@ -47,7 +47,7 @@ jobs:
             docker rm zapier-processor || true
             docker run -d \
               --name zapier-processor \
-              --restart always \         
-              --network kafka-net \  
+              --restart always \       
+              --network kafka-net \
               -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
-              dockbh/zapier-processor:${{ github.sha }} 
+              dockbh/zapier-processor:${{ github.sha }}
