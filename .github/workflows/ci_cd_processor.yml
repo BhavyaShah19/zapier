@@ -49,5 +49,5 @@ jobs:
               --name processor \
               --network kafka-net \
               --restart always \
-              -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
+              -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
               dockbh/zapier-processor:${{ github.sha }}

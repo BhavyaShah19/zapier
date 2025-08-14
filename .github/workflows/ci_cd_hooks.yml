@@ -51,6 +51,7 @@ jobs:
               --network app-network \
               --restart always \
               -p 3002:3002 \
+              -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
               dockbh/zapier-hooks:${{ github.sha }}
 
 
