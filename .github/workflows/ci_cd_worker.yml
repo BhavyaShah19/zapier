@@ -47,7 +47,7 @@ jobs:
             docker rm zapierWorker || true
             docker run -d \
               --name zapierWorker \
-              --restart always \
               --network kafka-net \
+              --restart always \
               -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
               dockbh/zapier-worker:${{ github.sha }}
